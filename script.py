@@ -49,17 +49,18 @@ def extract_archives_in_memory(path, depth=0):
                             f"{len(nested_data) / (1024 * 1024):.2f} MB"
                         )
 
-def create_text_file(path, layer):
+def create_text_file(path):
     size = TEXT_SIZE_MB * 1024 * 1024
 
     with open(path, "wb") as f:
-        chunk = (f"This is layer {layer}\n".encode()) * 1024
+        chunk = b"A" * (1024 * 1024)
 
-        written = 0
-        while written < size:
-            amount = min(len(chunk), size - written)
-            f.write(chunk[:amount])
-            written += amount
+        for _ in range(size // len(chunk)):
+            f.write(chunk)
+
+        remainder = size % len(chunk)
+        if remainder:
+            f.write(b"A" * remainder)
 
 
 def create_nested_archives(output):
