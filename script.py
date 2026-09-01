@@ -73,7 +73,7 @@ def create_nested_archives(output):
 
         for layer in reversed(range(LAYERS)):
             txt = temp / f"layer{layer}.txt"
-            create_text_file(txt, layer)
+            create_text_file(txt)
 
             new_zip = temp / f"layer{layer}.zip"
 
